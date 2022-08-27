@@ -1,13 +1,11 @@
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
+import User from "../models/user.model.js";
 
-const User = require("../models/user");
+export async function encrypt(rawPassword) {
+  return await bcrypt.hash(rawPassword, 12);
+}
 
-module.exports = {
-  async encrypt(rawPassword) {
-    return await bcrypt.hash(rawPassword, 12);
-  },
-  async passwordsMatch(rawPassword, userLogin) {
-    const encPassword = (await User.findOne({ login: userLogin })).password;
-    return await bcrypt.compare(rawPassword, encPassword);
-  },
-};
+export async function passwordsMatch(rawPassword, userLogin) {
+  const encPassword = (await User.findOne({ login: userLogin })).password;
+  return await bcrypt.compare(rawPassword, encPassword);
+}

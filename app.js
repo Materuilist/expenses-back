@@ -1,10 +1,10 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+import express from "express";
+import mongoose from "mongoose";
+import bodyParser from "body-parser";
 
-const initializeDB = require("./utils/initializeDB");
+import initializeDB from "./utils/initializeDB.js";
 
-const authRouter = require("./routes/auth");
+import authRouter from "./routes/auth.route.js";
 
 const app = express();
 
@@ -25,7 +25,7 @@ app.use("/auth", authRouter);
 app.use("/", async (err, req, res, next) => {
   await res.status(err.status || 500).json({
     message:
-      err.errorMessage ||
+      err.message ||
       "Произошла ошибка на сервере... Извините за предоставленные неудобства!",
   });
 });
@@ -38,7 +38,7 @@ mongoose.connect(
       return;
     }
 
-    await initializeDB();
+    // await initializeDB();
 
     app.listen(3200);
 
