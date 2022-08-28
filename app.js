@@ -4,7 +4,8 @@ import bodyParser from "body-parser";
 
 import initializeDB from "./utils/initializeDB.js";
 
-import authRouter from "./routes/auth.route.js";
+import authRouter from "./routes/auth.router.js";
+import categoryRouter from "./routes/category.router.js";
 import moneyFlowRouter from "./routes/money-flow.router.js";
 
 const app = express();
@@ -23,6 +24,7 @@ app.use("/", bodyParser.json({ limit: "50mb" }));
 
 app.use("/auth", authRouter);
 app.use("/moneyFlow", moneyFlowRouter);
+app.use("/category", categoryRouter);
 
 app.use("/", async (err, req, res, next) => {
   await res.status(err.status || 500).json({
